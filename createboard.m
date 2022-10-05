@@ -1,4 +1,4 @@
-boardGen = createboard(boardSize,numberBombs)
+function boardGen = createboard(boardSize,numberBombs)
 rng shuffle
 randomizer = randperm(boardSize^2);
 counter = 1;
