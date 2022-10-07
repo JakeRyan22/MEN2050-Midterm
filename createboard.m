@@ -44,7 +44,7 @@ for row = 1:boardSize
                         boardGen(counter + 1) = boardGen(counter + 1) + 1;
                     end
                     if boardGen(counter - boardSize) < 9
-                        boardGen(counter - boardSize) = boardGen(counter + boardSize) + 1;
+                        boardGen(counter - boardSize) = boardGen(counter - boardSize) + 1;
                     end
                     if boardGen(counter - (boardSize-1)) < 9
                         boardGen(counter - (boardSize-1)) = boardGen(counter - (boardSize-1)) + 1;
