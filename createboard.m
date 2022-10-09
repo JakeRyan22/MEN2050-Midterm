@@ -1,4 +1,6 @@
 function boardGen = createboard(boardSize,numberBombs)
+%%Creates a matrix of numbers that will be used to compute the game,
+%%seperate from the graphics matrix
 rng shuffle
 randomizer = randperm(boardSize^2); %non repeating integers from 1 to the # of elements in board
 boardGen = zeros(boardSize); %initializes the board matrix
