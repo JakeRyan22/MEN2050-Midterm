@@ -5,17 +5,17 @@ while check == 0
     check = checkInputD(difficulty);
 end
 [boardSize, numberBombs] = sizeBombs(difficulty);
+boardGen = createboard(boardSize,numberBombs);
 flags = zeros(boardSize);
 winCheck = zeros(boardSize);
-boardGen = createboard(boardSize,numberBombs);
 gameOver = 0;
 condition = logical(true);
-displayBoard = zeros(boardSize) - 100
+displayBoard = zeros(boardSize) - 100;
 while condition
     row = input('row');
     col = input('col');
     [gameOver,winCheck,displayBoard] = computeInput(row,col,boardGen,boardSize,winCheck,displayBoard);
-    displayBoard
+    displayBoard;
     if gameOver == 1 || sum(winCheck,'all') == boardSize^2 - numberBombs
         condition = false;
     end
