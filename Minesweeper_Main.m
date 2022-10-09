@@ -24,7 +24,7 @@ end
 
 %prints win or lose based on if bomb was hit in the main game loop
 if gameOver == 1
-    disp('You lose: hit a bomb.') 
+    disp('You lose: hit a bomb.')
 else 
     disp('Congratulations, you won.')
 end
