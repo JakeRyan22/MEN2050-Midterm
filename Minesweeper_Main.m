@@ -1,9 +1,5 @@
 clear; clc; close all;
-check = 0;%variable used to check user input
-while check == 0
-    difficulty = input('Please enter "easy", "medium", or "hard" for the deisred difficulty: ', "s");
-    check = checkInputD(difficulty); %repeats until the user inputs a valid difficulty
-end
+difficultySelect
 [boardSize, numberBombs] = sizeBombs(difficulty); %computes difficulty for board size and number of bombs
 boardGen = createboard(boardSize,numberBombs); %generates board matrix, bomb = 9
 flags = zeros(boardSize); %flags matrix that keeps track of where flags are placed
