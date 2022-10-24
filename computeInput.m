@@ -1,6 +1,10 @@
 function [gameOver,winCheck,displayBoard] = computeInput(row,col,boardGen,boardSize,winCheck,displayBoard)
 tile = boardGen(row,col);
 justRevealed = zeros(boardSize);
+button{1} = 'Reveal';
+button{2} = 'Flag';
+flagOrReveal = menu('please select to Reveal or Flag selected square', button{1}, button{2});
+if flagOrReveal == 1
 if tile == 9
     gameOver = 1;
     winCheck(row,col) = 0;
@@ -35,5 +39,17 @@ while 1 == 1
         [winCheck,justRevealed,displayBoard] = rightBoard(tmpr,tmpc,winCheck,boardGen,justRevealed,displayBoard);
     else
         [winCheck,justRevealed,displayBoard] = midBoard(tmpr,tmpc,winCheck,boardGen,justRevealed,displayBoard);
+    end
+end
+elseif flagOrReveal == 2
+    if boardGen(row,col) == 9
+       gameOver = 0;
+       displayBoard(row,col) = 12;
+       winCheck(row,col) = 1;
+       justRevealed(row,col) = 1;
+    elseif displayBoard == 12
+       gameOver = 0;
+       displayBoard(row,col) = reveal(row,col,displayBoard,boardGen);
+       winCheck(row,col) = 1;
     end
 end
