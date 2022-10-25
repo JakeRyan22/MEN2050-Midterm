@@ -11,7 +11,7 @@ while condition %main game loop
     displayBoard %temporary display board, will be replaced w/ fn but this is where it would go
     row = input('row'); 
     col = input('col');%temporary way to get user input for testing purposes
-    [gameOver,winCheck,displayBoard] = computeInput(row,col,boardGen,boardSize,winCheck,displayBoard);
+    [gameOver,winCheck,displayBoard,flags] = computeInput(row,col,boardGen,boardSize,winCheck,displayBoard,flags);
     %computes a [row,col] input to reveal the correct tiles and check if the win or lose condition is met
     if gameOver == 1 || sum(winCheck,'all') == boardSize^2 - numberBombs %if bomb hit or all non bomb tiles revealed
         condition = false; %ends main game loop
