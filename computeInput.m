@@ -2,10 +2,21 @@ function [gameOver,winCheck,displayBoard,flags] = computeInput(row,col,boardGen,
 tile = boardGen(row,col);
 justRevealed = zeros(boardSize);
 gameOver = 0;
-button{1} = 'Reveal';
-button{2} = 'Flag';
-flagOrReveal = menu('please select to Reveal or Flag selected square', button{1}, button{2});
-if flagOrReveal == 1
+check = 0;
+disp('Type an r to reveal the tile or an f to flag it.')
+
+while check == 0
+    MineSweeperBoard = figure(1);
+    waitforbuttonpress;
+    k = get(MineSweeperBoard,'CurrentKey');
+    if k == 'r' || k == 'f'
+        check = 1;
+    else
+        disp('Invalid key. Please enter an r to reveal the tile or an f to flag it.')
+    end
+end
+
+if k == 'r'
     if tile == 9
         gameOver = 1;
         winCheck(row,col) = 0;
@@ -42,11 +53,11 @@ if flagOrReveal == 1
             [winCheck,justRevealed,displayBoard] = midBoard(tmpr,tmpc,winCheck,boardGen,justRevealed,displayBoard);
         end
     end
-elseif flagOrReveal == 2
+elseif k == 'f'
     if winCheck(row,col) == 1
         disp('You cannot flag a tile that has already been revealed, please try again.')
     elseif flags(row,col) == 0
-        displayBoard(row,col) = 12;
+        displayBoard(row,col) = 11;
         flags(row,col) = 1;
     else
         displayBoard(row,col) = -100;
