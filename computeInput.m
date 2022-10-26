@@ -1,14 +1,12 @@
-function [gameOver,winCheck,displayBoard,flags] = computeInput(row,col,boardGen,boardSize,winCheck,displayBoard,flags)
-tile = boardGen(row,col);
 justRevealed = zeros(boardSize);
 gameOver = 0;
 check = 0;
 disp('Type an r to reveal the tile or an f to flag it.')
 
 while check == 0
-    MineSweeperBoard = figure(1);
+    h = figure(1);
     waitforbuttonpress;
-    k = get(MineSweeperBoard,'CurrentKey');
+    k = get(h,'CurrentKey');
     if k == 'r' || k == 'f'
         check = 1;
     else
@@ -17,12 +15,12 @@ while check == 0
 end
 
 if k == 'r'
-    if tile == 9
+    if boardGen(row,col) == 9
         gameOver = 1;
         winCheck(row,col) = 0;
     else
         gameOver = 0;
-        displayBoard = reveal(row,col,displayBoard,boardGen);
+        [displayBoard,mineSweeperGraphics,MineSweeperBoard] = reveal(row,col,displayBoard,boardGen,boardSize,mineSweeperGraphics,MineSweeperBoard);
         winCheck(row,col) = 1;
         justRevealed(row,col) = 1;
     end
@@ -34,23 +32,23 @@ if k == 'r'
             break
         end
         if isequal(edgeCase,[1,1])
-            [winCheck,justRevealed,displayBoard] = topLeftBoard(tmpr,tmpc,winCheck,boardGen,justRevealed,displayBoard);
+            topLeftBoard;
         elseif isequal(edgeCase,[1,boardSize])
-            [winCheck,justRevealed,displayBoard] = topRightBoard(tmpr,tmpc,winCheck,boardGen,justRevealed,displayBoard);
+            topRightBoard;
         elseif isequal(edgeCase,[boardSize,1])
-            [winCheck,justRevealed,displayBoard] = botLeftBoard(tmpr,tmpc,winCheck,boardGen,justRevealed,displayBoard);
+            botLeftBoard;
         elseif isequal(edgeCase,[boardSize,boardSize])
-            [winCheck,justRevealed,displayBoard] = botRightBoard(tmpr,tmpc,winCheck,boardGen,justRevealed,displayBoard);
+            botRightBoard;
         elseif tmpr == 1
-            [winCheck,justRevealed,displayBoard] = topBoard(tmpr,tmpc,winCheck,boardGen,justRevealed,displayBoard);
+            topBoard;
         elseif tmpr == boardSize
-            [winCheck,justRevealed,displayBoard] = botBoard(tmpr,tmpc,winCheck,boardGen,justRevealed,displayBoard);
+            botBoard;
         elseif tmpc == 1
-            [winCheck,justRevealed,displayBoard] = leftBoard(tmpr,tmpc,winCheck,boardGen,justRevealed,displayBoard);
+            leftBoard;
         elseif tmpc == boardSize
-            [winCheck,justRevealed,displayBoard] = rightBoard(tmpr,tmpc,winCheck,boardGen,justRevealed,displayBoard);
+            rightBoard;
         else
-            [winCheck,justRevealed,displayBoard] = midBoard(tmpr,tmpc,winCheck,boardGen,justRevealed,displayBoard);
+            midBoard;
         end
     end
 elseif k == 'f'
@@ -59,8 +57,10 @@ elseif k == 'f'
     elseif flags(row,col) == 0
         displayBoard(row,col) = 11;
         flags(row,col) = 1;
+        MineSweeperBoard{row,col} = mineSweeperGraphics{12};
     else
-        displayBoard(row,col) = -100;
+        displayBoard(row,col) = 10;
         flags(row,col) = 0;
+        MineSweeperBoard{row,col} = mineSweeperGraphics{11};
     end
 end

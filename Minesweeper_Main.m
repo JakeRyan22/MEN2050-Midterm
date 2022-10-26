@@ -9,22 +9,44 @@ winCheck = zeros(boardSize); %winCheck keeps track of revealed tiles, also used 
 gameOver = 0; %tracks lose condition (user hits bomb)
 condition = logical(true); %used for game loop, stays true if user hasn't won or lost yet
 displayBoard = zeros(boardSize) +10; %temporary display board used for testing purposes
+
+graphicsInitialization;
+
 while condition %main game loop
-    graphicsCompute
-    row = input('row'); 
-    col = input('col');%temporary way to get user input for testing purposes
-    [gameOver,winCheck,displayBoard,flags] = computeInput(row,col,boardGen,boardSize,winCheck,displayBoard,flags);
+    dispGraphics;
+    displayBoard
+    [x,y] = ginput(1);
+    row = floor(y/100) + 1;
+    col = floor(x/100) + 1;
+    check = 0;
+    while check == 0
+        if row < 1 || row > boardSize || col < 1 || col > boardSize
+            disp('Invalid tile, please click on the board')
+            [x,y] = ginput(1);
+            row = floor(y/100) + 1;
+            col = floor(x/100) + 1;
+        elseif winCheck(row,col) == 1
+            disp('Invalid tile, please click on one that is not revealed yet.')
+            [x,y] = ginput(1);
+            row = floor(y/100) + 1;
+            col = floor(x/100) + 1;
+        else
+            check = 1;
+        end
+    end
+    computeInput;
     %computes a [row,col] input to reveal the correct tiles and check if the win or lose condition is met
     if gameOver == 1 || sum(winCheck,'all') == boardSize^2 - numberBombs %if bomb hit or all non bomb tiles revealed
         condition = false; %ends main game loop
     end
+    dispGraphics;
 end
 
 %prints win or lose based on if bomb was hit in the main game loop
 if gameOver == 1
     disp('You lose: hit a bomb.')
-    graphicsCompute
+    dispGraphics;
 else 
     disp('Congratulations, you won.')
-    graphicsCompute
+    dispGraphics;
 end
